@@ -26,6 +26,9 @@ namespace ToDoMVC
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/todoListScripts")
+                .Include("~/Scripts/build/client.bundle.js"));
         }
     }
 }

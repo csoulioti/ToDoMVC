@@ -6,7 +6,7 @@ const TodoItem = React.createClass({
     render() {
         return (
 			<div>
-				ToDoItem
+				Hello from ToDoItem!
 			</div>
 		);
     }
