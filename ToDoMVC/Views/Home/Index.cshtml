@@ -1,14 +1,17 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    Layout = null;
 }
+<head>
+    @Styles.Render("~/Content/TodoApp/css")
+    @Scripts.Render("~/bundles/todoListScripts")
 
-<div class="row">
-    <div class="col-md-12">
-        <h2>ToDo List</h2>
-        <div id="todoApp"></div>
-    </div>
-</div>
+</head>
+<section id="todoapp"></section>
+<footer id="info">
+    <p>Double-click to edit a todo</p>
+</footer>
 
 <script type="text/javascript">
-    ReactDOM.render(React.createElement(TodoApp, {}), document.getElementById('todoApp'));
+    ReactDOM.render(React.createElement(TodoApp, {}), document.getElementById('todoapp'));
 </script>
