@@ -2,5 +2,8 @@
 
 module.exports = {
     // components
-    'todoItem': 'components/todoItem'
+    'todoItem': 'components/todoItem',
+
+    'appDispatcher': 'appDispatcher',
+    'todoConstants': 'constants/todoConstants',
 };
