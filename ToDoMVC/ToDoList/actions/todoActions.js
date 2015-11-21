@@ -7,7 +7,7 @@ var TodoActions = {
   */
   create(text) {
     Dispatcher.handleViewAction({
-      actionType: ActionTypes.create,
+      actionType: ActionTypes.todoCreate,
       text: text
     });
   },
