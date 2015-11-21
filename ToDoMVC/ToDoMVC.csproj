@@ -230,11 +230,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\todoApp.css" />
+    <Content Include="gulpfile.js" />
+    <Content Include="gulp\config.js" />
+    <Content Include="gulp\tasks\watch.js" />
     <Content Include="Scripts\build\client.js" />
     <Content Include="ToDoList\actions\todoActions.js" />
     <Content Include="ToDoList\app.css" />
     <Content Include="ToDoList\appDispatcher.js" />
     <Content Include="ToDoList\constants\todoConstants.js" />
+    <Content Include="ToDoList\stores\storeWithEvents.js" />
     <Content Include="ToDoList\stores\todoStore.js" />
     <Content Include="webpack.config.js" />
     <None Include="ClearScript.V8\ClearScriptV8-32.dll">
@@ -258,6 +262,9 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="package.json" />
+    <Content Include="gulp\tasks\dev.assets.js" />
+    <Content Include="host.config.template" />
+    <Content Include="host.config.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\build\server.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

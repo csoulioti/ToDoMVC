@@ -1,0 +1,8 @@
+﻿// We use this file to declare the localhost created by Visual Studio IIS server
+// so that browser-sync proxies the right address.
+// To make it work duplicate this file in the same folder, rename it to host.config.js
+// and provide the Project Url which can be found in the solution's Properties => Web, under Servers.
+
+module.exports = {
+  localHost: 'http://localhost:53051' //Change with your Visual Studio IIS server
+};
