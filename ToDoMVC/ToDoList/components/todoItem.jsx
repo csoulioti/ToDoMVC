@@ -1,90 +1,85 @@
-﻿var React = require('react');
-var ReactPropTypes = React.PropTypes;
-var TodoActions = require('../actions/todoActions');
-var TodoTextInput = require('./todoTextInput');
+import React from 'react';
 
-var classNames = require('classnames');
+import TodoActions from 'todoActions';
+import TodoTextInput from 'todoTextInput';
 
-var TodoItem = React.createClass({
+import classNames from 'classnames';
+let ReactPropTypes = React.PropTypes;
 
-    propTypes: {
-        todo: ReactPropTypes.object.isRequired
-    },
+const TodoItem = React.createClass({
 
-    getInitialState: function() {
-        return {
-            isEditing: false
-        };
-    },
+  propTypes: {
+    todo: ReactPropTypes.object.isRequired
+  },
 
-    /**
-     * @return {object}
-     */
-    render: function() {
-        var todo = this.props.todo;
+  getInitialState() {
+    return {
+      isEditing: false
+    };
+  },
 
-        var input;
-        if (this.state.isEditing) {
-            input =
-              <TodoTextInput
-            className="edit"
-            onSave={this._onSave}
-            value={todo.text}
-            />;
-        }
-
-        // List items should get the class 'editing' when editing
-        // and 'completed' when marked as completed.
-        // Note that 'completed' is a classification while 'complete' is a state.
-        // This differentiation between classification and state becomes important
-        // in the naming of view actions toggleComplete() vs. destroyCompleted().
-        return (
-          <li
-            className={classNames({
-              'completed': todo.complete,
-              'editing': this.state.isEditing
-    })}
-key={todo.id}>
-<div className="view">
-  <input
-className="toggle"
-type="checkbox"
-checked={todo.complete}
-onChange={this._onToggleComplete}
-/>
-<label onDoubleClick={this._onDoubleClick}>
-  {todo.text}
-</label>
-<button className="destroy" onClick={this._onDestroyClick} />
-</div>
-{input}
-</li>
-    );
-},
-
-_onToggleComplete: function() {
-    TodoActions.toggleComplete(this.props.todo);
-},
-
-_onDoubleClick: function() {
+  handleDoubleClick() {
     this.setState({isEditing: true});
-},
+  },
 
-/**
- * Event handler called within TodoTextInput.
- * Defining this here allows TodoTextInput to be used in multiple places
- * in different ways.
- * @param  {string} text
- */
-_onSave: function(text) {
+  handleToggleComplete() {
+    TodoActions.toggleComplete(this.props.todo);
+  },
+  /**
+  * Event handler called within TodoTextInput.
+  * Defining this here allows TodoTextInput to be used in multiple places
+  * in different ways.
+  * @param  {string} text
+  */
+  handleSave(text) {
     TodoActions.updateText(this.props.todo.id, text);
     this.setState({isEditing: false});
-},
+  },
 
-_onDestroyClick: function() {
+  handleDestroyClick() {
     TodoActions.destroy(this.props.todo.id);
-}
+  },
 
-});
+  render() {
+    var todo = this.props.todo;
 
-module.exports = TodoItem;
+    var input;
+    if (this.state.isEditing) {
+      input =
+      <TodoTextInput
+        className="edit"
+        onSave={this.handleSave}
+        value={todo.text}
+        />;
+    }
+
+    // List items should get the class 'editing' when editing
+    // and 'completed' when marked as completed.
+    // Note that 'completed' is a classification while 'complete' is a state.
+    // This differentiation between classification and state becomes important
+    // in the naming of view actions toggleComplete() vs. destroyCompleted().
+    return (
+      <li
+        className={classNames({
+          'completed': todo.complete,
+          'editing': this.state.isEditing })}
+          key={todo.id}>
+          <div className="view">
+            <input
+              className="toggle"
+              type="checkbox"
+              checked={todo.complete}
+              onChange={this.handleToggleComplete}
+              />
+            <label onDoubleClick={this.handleDoubleClick}>
+              {todo.text}
+            </label>
+            <button className="destroy" onClick={this.handleDestroyClick} />
+          </div>
+          {input}
+        </li>
+      );
+    }
+  });
+
+  export default TodoItem;

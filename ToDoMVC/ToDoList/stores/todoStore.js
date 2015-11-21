@@ -1,163 +1,149 @@
-﻿import AppDispatcher from 'appDispatcher';
-var EventEmitter = require('events').EventEmitter;
-import TodoConstants from 'todoConstants';
+'use strict';
+
+import AppDispatcher from 'appDispatcher';
+import StoreWithEvents from 'storeWithEvents';
+import {EventEmitter} from 'events';
+import {ActionTypes} from 'todoConstants';
 import assign from 'object-assign';
 
-var CHANGE_EVENT = 'change';
+let changeEvent = 'change';
+let storeWithEvents = new StoreWithEvents(changeEvent);
 
-var _todos = {};
+let _todos = {};
 
 /**
- * Create a TODO item.
- * @param  {string} text The content of the TODO
- */
-function create(text) {
-    // Hand waving here -- not showing how this interacts with XHR or persistent
-    // server-side storage.
-    // Using the current timestamp + random number in place of a real id.
-    var id = (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
-    _todos[id] = {
-        id: id,
-        complete: false,
-        text: text
-    };
+* Create a TODO item.
+* @param  {string} text The content of the TODO
+*/
+const create = (text) => {
+  // Hand waving here -- not showing how this interacts with XHR or persistent
+  // server-side storage.
+  // Using the current timestamp + random number in place of a real id.
+  var id = (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
+  _todos[id] = {
+    id: id,
+    complete: false,
+    text: text
+  };
 }
 
 /**
- * Update a TODO item.
- * @param  {string} id
- * @param {object} updates An object literal containing only the data to be
- *     updated.
- */
-function update(id, updates) {
-    _todos[id] = assign({}, _todos[id], updates);
+* Update a TODO item.
+* @param  {string} id
+* @param {object} updates An object literal containing only the data to be
+*     updated.
+*/
+const update = (id, updates) => {
+  _todos[id] = assign({}, _todos[id], updates);
 }
 
 /**
- * Update all of the TODO items with the same object.
- * @param  {object} updates An object literal containing only the data to be
- *     updated.
- */
-function updateAll(updates) {
-    for (var id in _todos) {
-        update(id, updates);
+* Update all of the TODO items with the same object.
+* @param  {object} updates An object literal containing only the data to be
+*     updated.
+*/
+const updateAll = (updates) => {
+  for (var id in _todos) {
+    update(id, updates);
+  }
+}
+
+/**
+* Delete a TODO item.
+* @param  {string} id
+*/
+const destroy = (id) => {
+  delete _todos[id];
+}
+//Delete all the completed TODO items.
+const destroyCompleted = () => {
+  for (var id in _todos) {
+    if (_todos[id].complete) {
+      destroy(id);
     }
+  }
 }
-
-/**
- * Delete a TODO item.
- * @param  {string} id
- */
-function destroy(id) {
-    delete _todos[id];
-}
-
-/**
- * Delete all the completed TODO items.
- */
-function destroyCompleted() {
-    for (var id in _todos) {
-        if (_todos[id].complete) {
-            destroy(id);
-        }
-    }
-}
-
-var TodoStore = assign({}, EventEmitter.prototype, {
-
-    /**
-     * Tests whether all the remaining TODO items are marked as completed.
-     * @return {boolean}
-     */
-    areAllComplete: function () {
-        for (var id in _todos) {
-            if (!_todos[id].complete) {
-                return false;
-            }
-        }
-        return true;
-    },
-
-    /**
-     * Get the entire collection of TODOs.
-     * @return {object}
-     */
-    getAll: function () {
-        return _todos;
-    },
-
-    emitChange: function () {
-        this.emit(CHANGE_EVENT);
-    },
-
-    /**
-     * @param {function} callback
-     */
-    addChangeListener: function (callback) {
-        this.on(CHANGE_EVENT, callback);
-    },
-
-    /**
-     * @param {function} callback
-     */
-    removeChangeListener: function (callback) {
-        this.removeListener(CHANGE_EVENT, callback);
-    }
-});
 
 // Register callback to handle all updates
-AppDispatcher.register(function (action) {
-    var text;
+const registeredCallback = (payload) => {
+  let action = payload.action;
+  let text;
 
-    switch (action.actionType) {
-        case TodoConstants.TODO_CREATE:
-            text = action.text.trim();
-            if (text !== '') {
-                create(text);
-                TodoStore.emitChange();
-            }
-            break;
-
-        case TodoConstants.TODO_TOGGLE_COMPLETE_ALL:
-            if (TodoStore.areAllComplete()) {
-                updateAll({ complete: false });
-            } else {
-                updateAll({ complete: true });
-            }
-            TodoStore.emitChange();
-            break;
-
-        case TodoConstants.TODO_UNDO_COMPLETE:
-            update(action.id, { complete: false });
-            TodoStore.emitChange();
-            break;
-
-        case TodoConstants.TODO_COMPLETE:
-            update(action.id, { complete: true });
-            TodoStore.emitChange();
-            break;
-
-        case TodoConstants.TODO_UPDATE_TEXT:
-            text = action.text.trim();
-            if (text !== '') {
-                update(action.id, { text: text });
-                TodoStore.emitChange();
-            }
-            break;
-
-        case TodoConstants.TODO_DESTROY:
-            destroy(action.id);
-            TodoStore.emitChange();
-            break;
-
-        case TodoConstants.TODO_DESTROY_COMPLETED:
-            destroyCompleted();
-            TodoStore.emitChange();
-            break;
-
-        default:
-            // no op
+  switch (action.actionType) {
+    case ActionTypes.todoCreate:
+    text = action.text.trim();
+    if (text !== '') {
+      create(text);
+      storeWithEvents.emitChange();
     }
-});
+    break;
 
-module.exports = TodoStore;
+    case ActionTypes.todoToggleCompleteAll:
+    if (TodoStore.areAllComplete()) {
+      updateAll({ complete: false });
+    } else {
+      updateAll({ complete: true });
+    }
+    storeWithEvents.emitChange();
+    break;
+
+    case ActionTypes.todoUndoComplete:
+    update(action.id, { complete: false });
+    storeWithEvents.emitChange();
+    break;
+
+    case ActionTypes.todoComplete:
+    update(action.id, { complete: true });
+    storeWithEvents.emitChange();
+    break;
+
+    case ActionTypes.todoUpdateText:
+    text = action.text.trim();
+    if (text !== '') {
+      update(action.id, { text: text });
+      storeWithEvents.emitChange();
+    }
+    break;
+
+    case ActionTypes.todoDestroy:
+    destroy(action.id);
+    storeWithEvents.emitChange();
+    break;
+
+    case ActionTypes.todoDestroyCompleted:
+    destroyCompleted();
+    storeWithEvents.emitChange();
+    break;
+
+    default:
+    // no op
+  }
+};
+AppDispatcher.register(registeredCallback);
+
+let TodoStore = {
+  // Public methods
+  addChangeListener: (callback) => {
+    storeWithEvents.addChangeListener(callback);
+  },
+  removeChangeListener: (callback) => {
+    storeWithEvents.removeChangeListener(callback);
+  },
+  //Tests whether all the remaining TODO items are marked as completed.
+  //@return {boolean}
+  areAllComplete: () => {
+    for (var id in _todos) {
+      if (!_todos[id].complete) {
+        return false;
+      }
+    }
+    return true;
+  },
+  // Get the entire collection of TODOs.
+  // @return {object}
+  getAll: () => {
+    return _todos;
+  }
+};
+
+export default TodoStore;

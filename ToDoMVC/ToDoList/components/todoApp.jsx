@@ -1,8 +1,10 @@
-﻿var Footer = require('./footer');
-var Header = require('./header');
-var MainSection = require('./mainSection');
-var React = require('react');
-var TodoStore = require('../stores/todoStore');
+﻿import React from 'react';
+
+import Footer from 'footer';
+import Header from 'header';
+import MainSection from'mainSection';
+
+import TodoStore from 'todoStore';
 
 /**
  * Retrieve the current TODO data from the TodoStore
@@ -14,23 +16,27 @@ function getTodoState() {
     };
 }
 
-var TodoApp = React.createClass({
+const TodoApp = React.createClass({
 
-    getInitialState: function() {
+    getInitialState() {
         return getTodoState();
     },
 
-    componentDidMount: function() {
+    componentDidMount() {
         TodoStore.addChangeListener(this._onChange);
     },
 
-    componentWillUnmount: function() {
+    componentWillUnmount() {
         TodoStore.removeChangeListener(this._onChange);
     },
 
     /**
-     * @return {object}
+     * Event handler for 'change' events coming from the TodoStore
      */
+    _onChange: function() {
+        this.setState(getTodoState());
+    },
+
     render: function() {
         return (
           <div>
@@ -42,15 +48,7 @@ var TodoApp = React.createClass({
         <Footer allTodos={this.state.allTodos} />
       </div>
     );
-},
-
-/**
- * Event handler for 'change' events coming from the TodoStore
- */
-_onChange: function() {
-    this.setState(getTodoState());
-}
-
+  }
 });
 
-module.exports = TodoApp;
+export default TodoApp;

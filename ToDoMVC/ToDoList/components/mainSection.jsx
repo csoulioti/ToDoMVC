@@ -1,9 +1,11 @@
-﻿var React = require('react');
-var ReactPropTypes = React.PropTypes;
-var TodoActions = require('../actions/todoActions');
-var TodoItem = require('./todoItem');
+import React from 'react';
 
-var MainSection = React.createClass({
+import TodoActions from 'todoActions';
+import TodoItem from 'todoItem';
+
+let ReactPropTypes = React.PropTypes;
+
+const MainSection = React.createClass({
 
   propTypes: {
     allTodos: ReactPropTypes.object.isRequired,
@@ -11,8 +13,12 @@ var MainSection = React.createClass({
   },
 
   /**
-   * @return {object}
-   */
+  * Event handler to mark all TODOs as complete
+  */
+  handleToggleCompleteAll: function() {
+    TodoActions.toggleCompleteAll();
+  },
+
   render: function() {
     // This section should be hidden by default
     // and shown when there are todos.
@@ -30,22 +36,14 @@ var MainSection = React.createClass({
     return (
       <section id="main">
         <input id="toggle-all"
-               type="checkbox"
-               onChange={this._onToggleCompleteAll}
-               checked={this.props.areAllComplete} />
+          type="checkbox"
+          onChange={this.handleToggleCompleteAll}
+          checked={this.props.areAllComplete} />
         <label htmlFor="toggle-all">Mark all as complete</label>
         <ul id="todo-list">{todos}</ul>
       </section>
     );
-  },
-
-  /**
-   * Event handler to mark all TODOs as complete
-   */
-  _onToggleCompleteAll: function() {
-    TodoActions.toggleCompleteAll();
   }
-
 });
 
-module.exports = MainSection;
+export default MainSection;

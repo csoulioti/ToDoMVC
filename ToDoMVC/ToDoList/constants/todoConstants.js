@@ -1,11 +1,14 @@
-﻿import keyMirror from 'keymirror';
+import keyMirror from 'keymirror';
 
-module.exports = keyMirror({
-    TODO_CREATE: null,
-    TODO_COMPLETE: null,
-    TODO_DESTROY: null,
-    TODO_DESTROY_COMPLETED: null,
-    TODO_TOGGLE_COMPLETE_ALL: null,
-    TODO_UNDO_COMPLETE: null,
-    TODO_UPDATE_TEXT: null
-});
+let TodoConstants = {
+  ActionTypes: {
+      todoCreate: 'TODO_CREATE',
+      todoComplete: 'TODO_COMPLETE',
+      todoDestroy: 'TODO_DESTROY',
+      todoDestroyCompleted: 'TODO_DESTROY_COMPLETED',
+      todoToggleCompleteAll: 'TODO_TOGGLE_COMPLETE_ALL',
+      todoUndoComplete: 'TODO_UNDO_COMPLETE',
+      todoUpdateText: 'TODO_UPDATE_TEXT'
+  }
+};
+export default TodoConstants;

@@ -1,36 +1,32 @@
-﻿var React = require('react');
-var TodoActions = require('../actions/todoActions');
-var TodoTextInput = require('./todoTextInput');
+import React from 'react';
 
-var Header = React.createClass({
+import TodoActions from 'todoActions';
+import TodoTextInput from 'todoTextInput';
+
+const Header = React.createClass({
 
   /**
-   * @return {object}
-   */
-  render: function() {
+  * Event handler called within TodoTextInput.
+  * Defining this here allows TodoTextInput to be used in multiple places
+  * in different ways.
+  * @param {string} text
+  */
+  handleSave(text) {
+    if (text.trim()){
+      TodoActions.create(text);
+    }
+  },
+
+  render() {
     return (
       <header id="header">
         <h1>todos</h1>
         <TodoTextInput id="new-todo"
-                       placeholder="What needs to be done?"
-                       onSave={this._onSave} />
+          placeholder="What needs to be done?"
+          onSave={this.handleSave} />
       </header>
     );
-  },
-
-  /**
-   * Event handler called within TodoTextInput.
-   * Defining this here allows TodoTextInput to be used in multiple places
-   * in different ways.
-   * @param {string} text
-   */
-  _onSave: function(text) {
-    if (text.trim()){
-      TodoActions.create(text);
-    }
-
   }
-
 });
 
-module.exports = Header;
+export default Header;
