@@ -1,5 +1,3 @@
-import keyMirror from 'keymirror';
-
 let TodoConstants = {
   ActionTypes: {
       todoCreate: 'TODO_CREATE',
