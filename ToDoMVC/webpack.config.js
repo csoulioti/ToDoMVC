@@ -15,14 +15,15 @@ module.exports = {
         filename: '[name].bundle.js'
     },
     module: {
-        loaders: [
-          // Transform JSX in .jsx files
-          {
-              test: /\.jsx?$/,
-              exclude: /node_modules/,
-              loader: 'babel-loader'
-          }
-        ],
+        loaders:
+          [
+            // Transform JSX in .jsx files, ES6 code to ES5 using Babel
+            {
+                test: /\.jsx?$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader'
+            }
+          ]
     },
     resolve: {
         // Declares the root folder used for aliases

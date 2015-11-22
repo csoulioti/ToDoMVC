@@ -11,13 +11,20 @@
     "gulp": "3.9.0",
     "gulp-install": "^0.6.0",
     "gulp-util": "3.0.6",
+    "immutable": "3.7.5",
+    "lodash": "3.10.1",
     "react": "0.14.2",
     "react-dom": "0.14.2",
     "webpack": "1.12.2"
   },
   "devDependencies": {
+    "browser-sync": "2.10.0",
     "gulp-install": "0.6.0",
     "progress": "1.1.8",
-    "require-dir": "0.3.0"
+    "react-hot-loader": "1.2.8",
+    "require-dir": "0.3.0",
+    "webpack-hot-middleware": "2.5.0",
+    "webpack-dev-middleware": "1.2.0",
+    "webpack-merge": "0.3.0"
   }
 }
