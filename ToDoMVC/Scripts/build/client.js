@@ -1,6 +1,7 @@
-﻿// This is the entry point for the bundle file that is used during server side creation of the HTML pages
-// It is used by the Reactjs.NET engine to produce the HTML markup server side and is a stripped down version of
-// the corresponding client bundle as in the server side we need only the widgets and all their dependencies
-import TodoApp from 'expose?TodoApp!../../ToDoList/components/TodoApp';
+﻿// This is the entry point for the bundle file that is loaded inside todoList.
+// We expose two objects in the global scope that can be used as regular JavaScript objects (e.g. invoke operations from console)
+// All other objects are not accessible from global scope as the resulting bundle contains a huge immediate calling function,
+// that doesn't expose anything by default
+import TodoApp from 'expose?TodoApp!../../ToDoList/components/todoApp';
 import React from 'expose?React!react';
 import ReactDOM from 'expose?ReactDOM!react-dom';

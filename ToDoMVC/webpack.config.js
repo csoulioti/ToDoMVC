@@ -8,7 +8,7 @@ module.exports = {
         // The result is one bundle per entry point
         // The final bundle tries to resolve all dependencies by starting from the root object returned by the resolved object in the referenced file
         server: ['./server'],
-        client: './client'
+        client: ['./client']
     },
     output: {
         path: path.join(__dirname, 'Scripts', 'build'),
