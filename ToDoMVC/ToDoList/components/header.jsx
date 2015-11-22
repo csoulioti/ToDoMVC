@@ -22,7 +22,7 @@ const Header = React.createClass({
       <header id="header">
         <h1>Things to do</h1>
         <TodoTextInput id="new-todo"
-          placeholder="What needs to be doneff"
+          placeholder="What needs to be done"
           onSave={this.handleSave} />
       </header>
     );

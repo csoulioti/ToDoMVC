@@ -232,6 +232,7 @@
     <Content Include="Content\todoApp.css" />
     <Content Include="gulpfile.js" />
     <Content Include="gulp\config.js" />
+    <Content Include="gulp\tasks\hot-reload.js" />
     <Content Include="gulp\tasks\install.js" />
     <Content Include="gulp\tasks\development.js" />
     <Content Include="gulp\tasks\default.js" />
