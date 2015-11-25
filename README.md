@@ -23,5 +23,5 @@ To enable watcher you have to run this command:
 
     gulp watch
 
-This will watch files and do something when a file changes. This always returns an EventEmitter that emits change events.
+This will watch the javascript folder ToDoList and when you save any changed file it will recompile the bundles.
 
