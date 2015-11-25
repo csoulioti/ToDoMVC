@@ -17,7 +17,7 @@ This will perform an initial build and will update client.js and server.js with 
 
 Install gulp globally:
 
-    npm install --global gulp
+    npm install gulp -g
 
 To enable watcher you have to run this command:
 
