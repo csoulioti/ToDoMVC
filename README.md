@@ -13,7 +13,7 @@ To build the javascript files of application, first run this command:
 
     webpack
 
-This will perform an initial build and start a watcher process that will update client.js and server.js with any changes you wish to make.
+This will perform an initial build and will update client.js and server.js with any changes you wish to make.
 
 Install gulp globally:
 
