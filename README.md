@@ -11,9 +11,7 @@ This will install all dependencies.
 
 To build the javascript files of application, first run this command:
 
-```
     webpack
-```
 
 This will perform an initial build and will update client.js and server.js with any changes you wish to make.
 
