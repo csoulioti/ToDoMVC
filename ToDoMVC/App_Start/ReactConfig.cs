@@ -22,7 +22,7 @@ namespace ToDoMVC
             // scripts. Example:
             ReactSiteConfiguration.Configuration
                 //	.SetLoadBabel(false)
-                .AddScriptWithoutTransform("~/Scripts/bundle.server.js");
+                .AddScriptWithoutTransform("~/Scripts/build/server.bundle.js");
 		}
 	}
 }

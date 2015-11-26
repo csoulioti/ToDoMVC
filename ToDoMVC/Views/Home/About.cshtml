@@ -1,12 +1,19 @@
 ﻿@{
     ViewBag.Title = "Things to do";
+    Layout = null;
 }
 <head>
     @Styles.Render("~/Content/TodoApp/css")
-    @Scripts.Render("~/bundles/todoListScripts")
+    @Scripts.Render("~/bundles/todoListServerScripts")
 
 </head>
-<section id="todoapp"></section>
+
+<!-- This will render the component server-side -->
+@Html.React("MainSection", new {
+    allTodos = new List<object> { new { id=1, text="test", complete=false }, new { id = 2, text = "test", complete = false } } })
+
+@Html.ReactInitJavaScript()
+
 <footer id="info">
-    <p>Double-click to edit a todo</p>
+    <p>@Html.ActionLink("Things to do", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</p>
 </footer>

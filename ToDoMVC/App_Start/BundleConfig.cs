@@ -33,6 +33,9 @@ namespace ToDoMVC
 
             bundles.Add(new ScriptBundle("~/bundles/todoListScripts")
                 .Include("~/Scripts/build/client.bundle.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/todoListServerScripts")
+                .Include("~/Scripts/build/server.bundle.js"));
         }
     }
 }
