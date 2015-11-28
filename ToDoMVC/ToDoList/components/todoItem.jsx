@@ -11,7 +11,8 @@ let ReactPropTypes = React.PropTypes;
 const TodoItem = React.createClass({
 
   propTypes: {
-    todo: ReactPropTypes.object.isRequired
+      todo: ReactPropTypes.object.isRequired,
+      isPreviewMode: ReactPropTypes.bool
   },
 
   getInitialState() {
@@ -55,31 +56,39 @@ const TodoItem = React.createClass({
         />;
     }
 
+    let toItemMarkUp = (<li className={classNames({'completed': todo.complete, 'editing': this.state.isEditing })} key={todo.id}>
+                            <div className="view">
+                              <input className="toggle"
+                                type="checkbox"
+                                checked={todo.complete}
+                                onChange={this.handleToggleComplete}
+                                />
+                                <label onDoubleClick={this.handleDoubleClick}>
+                                  {todo.text}
+                                </label>
+                                <button className="destroy" onClick={this.handleDestroyClick} />
+                            </div>
+                            {input}
+                        </li>);
+    if (this.props.isPreviewMode) {
+        toItemMarkUp = (<li className={classNames({'completed': todo.complete, 'editing': this.state.isEditing })} key={todo.id}>
+                            <div className="view">
+                                <label>
+                                  {todo.text}
+                                </label>
+                            </div>
+                            {input}
+                        </li>);
+    }
+
     // List items should get the class 'editing' when editing
     // and 'completed' when marked as completed.
     // Note that 'completed' is a classification while 'complete' is a state.
     // This differentiation between classification and state becomes important
     // in the naming of view actions toggleComplete() vs. destroyCompleted().
-    return (
-      <li
-        className={classNames({
-          'completed': todo.complete,
-          'editing': this.state.isEditing })}
-          key={todo.id}>
-          <div className="view">
-            <input
-              className="toggle"
-              type="checkbox"
-              checked={todo.complete}
-              onChange={this.handleToggleComplete}
-              />
-            <label onDoubleClick={this.handleDoubleClick}>
-              {todo.text}
-            </label>
-            <button className="destroy" onClick={this.handleDestroyClick} />
-          </div>
-          {input}
-        </li>
+                        return (
+                            <div>{toItemMarkUp}</div>
+      
       );
     }
   });

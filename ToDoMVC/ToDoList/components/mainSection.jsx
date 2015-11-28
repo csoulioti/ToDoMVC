@@ -10,7 +10,8 @@ const MainSection = React.createClass({
 
   propTypes: {
     allTodos: ReactPropTypes.object.isRequired,
-    areAllComplete: ReactPropTypes.bool.isRequired
+    areAllComplete: ReactPropTypes.bool.isRequired, 
+    isPreviewMode: ReactPropTypes.bool
   },
 
   /**
@@ -27,22 +28,31 @@ const MainSection = React.createClass({
       return null;
     }
 
-    var allTodos = this.props.allTodos;
-    var todos = [];
+    let allTodos = this.props.allTodos;
+    let todos = [];
 
     for (var key in allTodos) {
-      todos.push(<TodoItem key={key} todo={allTodos[key]} />);
+        todos.push(<TodoItem key={key} todo={allTodos[key]} isPreviewMode={this.props.isPreviewMode} />);
     }
 
-    return (
-      <section id="main">
-        <input id="toggle-all"
-          type="checkbox"
-          onChange={this.handleToggleCompleteAll}
-          checked={this.props.areAllComplete} />
-        <label htmlFor="toggle-all">Mark all as complete</label>
-        <ul id="todo-list">{todos}</ul>
-      </section>
+    let sectionMarkUp = (<section id="main">
+                            <input id="toggle-all"
+                            type="checkbox"
+                            onChange={this.handleToggleCompleteAll}
+                            checked={this.props.areAllComplete} />
+                            <label htmlFor="toggle-all">Mark all as complete</label>
+                            <ul id="todo-list">{todos}</ul>
+                          </section>);
+
+     if (this.props.isPreviewMode) {
+         sectionMarkUp =  (<section id="main">
+                              <ul id="todo-list">{todos}</ul>
+                            </section>);
+     }
+     return (
+         <div>
+             {sectionMarkUp}
+         </div>
     );
   }
 });

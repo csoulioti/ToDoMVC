@@ -10,7 +10,14 @@
 
 <!-- This will render the component server-side -->
 @Html.React("MainSection", new {
-    allTodos = new List<object> { new { id=1, text="test", complete=false }, new { id = 2, text = "test", complete = false } } })
+    allTodos = new Dictionary<int,object> {
+                        { 1, new { text = "React App Infrastructure", complete = false}},
+                        { 2, new { text = "React App CodeBase" , complete = false} } ,
+                        { 3, new { text = "Flux Architecture" , complete = false} },
+                        { 4, new { text = "Server Side Rendering" , complete = false} }},
+    areAllComplete = true,
+    isPreviewMode = true
+})
 
 @Html.ReactInitJavaScript()
 
